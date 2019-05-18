@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Clean City</string>
-    <string name="title_home">Home</string>
+    <string name="title_profile">Профиль</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_map">Карта</string>
+    <string name="title_more">Ещё</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
 </resources>

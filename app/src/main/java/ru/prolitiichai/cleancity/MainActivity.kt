@@ -1,37 +1,65 @@
 package ru.prolitiichai.cleancity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.view.Window
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var textMessage: TextView
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                textMessage.setText(R.string.title_home)
-                return@OnNavigationItemSelectedListener true
+    companion object {
+        var lastFragmetTag: String? = null
+    }
+
+    private fun loadFragment(itemId: Int) {
+        val tag = itemId.toString()
+        var fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (itemId) {
+            R.id.navigation_map -> {
+                MapActivity.newInstance()
             }
-            R.id.navigation_dashboard -> {
-                textMessage.setText(R.string.title_dashboard)
-                return@OnNavigationItemSelectedListener true
+            R.id.navigation_profile -> {
+                ProfileActivity.newInstance()
             }
-            R.id.navigation_notifications -> {
-                textMessage.setText(R.string.title_notifications)
-                return@OnNavigationItemSelectedListener true
+            else -> {
+                null
             }
         }
-        false
+
+        if (fragment != null) {
+            val transaction = supportFragmentManager.beginTransaction()
+
+            if (lastFragmetTag != null) {
+                val lastFragment = supportFragmentManager.findFragmentByTag(lastFragmetTag)
+                if (lastFragment != null)
+                    transaction.hide(lastFragment)
+            }
+
+            if (!fragment.isAdded) {
+                transaction.add(R.id.fragmentContainer, fragment, tag)
+            } else {
+                transaction.show(fragment)
+            }
+
+            transaction.commit()
+
+            lastFragmetTag = tag
+        }
+    }
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        loadFragment(item.itemId)
+        true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
-        textMessage = findViewById(R.id.message)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        loadFragment(R.id.navigation_profile)
     }
 }
