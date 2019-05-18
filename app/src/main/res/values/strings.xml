@@ -7,4 +7,7 @@
     <string name="title_more">Ещё</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
+    <string name="have_no_account">Нет аккаунта?</string>
+    <string name="create">Создать</string>
+    <string name="enter">Вход</string>
 </resources>
