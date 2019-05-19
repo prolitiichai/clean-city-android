@@ -4,6 +4,9 @@ import android.app.Application
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.prolitiichai.cleancity.api.CleanCityApi
+import okhttp3.OkHttpClient
+import ru.prolitiichai.cleancity.api.MyCookieJar
+
 
 class App : Application() {
 
@@ -21,6 +24,8 @@ class App : Application() {
 
         retrofit = Retrofit.Builder()
             .baseUrl("http://46.146.211.12:25567")
+            .client(OkHttpClient().newBuilder()
+                .cookieJar(MyCookieJar()).build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         cleanCityApi = retrofit!!.create(CleanCityApi::class.java)
