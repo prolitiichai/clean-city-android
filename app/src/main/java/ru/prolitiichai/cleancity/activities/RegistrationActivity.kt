@@ -1,4 +1,4 @@
-package ru.prolitiichai.cleancity
+package ru.prolitiichai.cleancity.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.activity_registration.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import ru.prolitiichai.cleancity.App
+import ru.prolitiichai.cleancity.R
 import ru.prolitiichai.cleancity.dto.RegistrationDto
 import ru.prolitiichai.cleancity.utils.Utils
 
@@ -39,7 +41,7 @@ class RegistrationActivity : AppCompatActivity() {
             Utils.showError("Необходимо заполнить пароль", this)
             return
         }
-        if (password.length < 6) {
+        if (password.length < 7) {
             Utils.showError("Слишком слабый пароль (необходимо минимум 6 символов)", this)
             return
         }

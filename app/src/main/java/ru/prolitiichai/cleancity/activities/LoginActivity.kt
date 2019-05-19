@@ -1,4 +1,4 @@
-package ru.prolitiichai.cleancity
+package ru.prolitiichai.cleancity.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import ru.prolitiichai.cleancity.App
+import ru.prolitiichai.cleancity.R
 import ru.prolitiichai.cleancity.utils.Utils
 
 class LoginActivity: AppCompatActivity() {
@@ -38,7 +40,7 @@ class LoginActivity: AppCompatActivity() {
         }
         App.getApi().login(login, password).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 400) {
+                if (response.code() == 400 || response.code() == 401) {
                     Utils.showError("Неверенные логин или пароль", this@LoginActivity)
                 } else if (response.code() == 200) {
                     completeLogin()
